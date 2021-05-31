@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
               bodyColor: Colors.white,
               displayColor: Colors.white,
             ),
+        accentColor: Colors.white,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );

@@ -1,4 +1,5 @@
 import 'package:amazon_prime_clone/models/home/homeModal.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/constants.dart';
@@ -52,7 +53,7 @@ class CategoryWidget extends StatelessWidget {
                           image: DecorationImage(
                             fit: BoxFit.cover,
                             alignment: Alignment.topCenter,
-                            image: NetworkImage(e.imagePath),
+                            image: CachedNetworkImageProvider(e.imagePath),
                           ),
                         ),
                       ),

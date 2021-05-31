@@ -27,47 +27,47 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 4,
       child: Scaffold(
           body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Container(
-                padding: EdgeInsets.only(top: 20, bottom: 30),
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverToBoxAdapter(
                 child: Container(
-                  height: 25,
-                  child: Image(
-                    width: 80,
-                    image: AssetImage('assets/images/prime_logo.png'),
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Container(
+                    height: 20,
+                    child: Image(
+                      width: 80,
+                      image: AssetImage('assets/images/prime_logo.png'),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SliverPersistentHeader(
-              delegate: _SliverAppBarDelegate(
-                TabBar(
-                  indicatorColor: Colors.white,
-                  labelPadding: EdgeInsets.zero,
-                  tabs: [
-                    Tab(text: 'Home'),
-                    Tab(text: 'TV Shows'),
-                    Tab(text: 'Movies'),
-                    Tab(text: 'Kids'),
-                  ],
+              SliverPersistentHeader(
+                delegate: _SliverAppBarDelegate(
+                  TabBar(
+                    indicatorColor: Colors.white,
+                    labelPadding: EdgeInsets.zero,
+                    tabs: [
+                      Tab(text: 'Home'),
+                      Tab(text: 'TV Shows'),
+                      Tab(text: 'Movies'),
+                      Tab(text: 'Kids'),
+                    ],
+                  ),
                 ),
+                pinned: true,
               ),
-              pinned: true,
-            ),
-            SliverFillRemaining(
-              child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  HomeTabView(),
-                  HomeTabView(),
-                  HomeTabView(),
-                  HomeTabView(),
-                ],
-              ),
-            ),
-          ],
+            ];
+          },
+          body: TabBarView(
+            children: <Widget>[
+              HomeTabView(),
+              HomeTabView(),
+              HomeTabView(),
+              HomeTabView(),
+            ],
+          ),
         ),
       )),
     );

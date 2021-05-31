@@ -41,7 +41,7 @@ List<ShowItem> originals = [
       id: 2,
       name: 'Invincible',
       imagePath:
-          'https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Invincible_Amazon_Prime.jpg/250px-Invincible_Amazon_Prime.jpg'),
+          'https://m.media-amazon.com/images/I/818kzWXxO8L._AC_UY545_FMwebp_QL65_.jpg'),
   ShowItem(
       id: 3,
       name: 'Mirzapur',
@@ -59,7 +59,7 @@ List<ShowItem> carouselItems = [
       id: 2,
       name: 'Invincible',
       imagePath:
-          'https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Invincible_Amazon_Prime.jpg/250px-Invincible_Amazon_Prime.jpg'),
+          'https://m.media-amazon.com/images/I/818kzWXxO8L._AC_UY545_FMwebp_QL65_.jpg'),
   ShowItem(
       id: 3,
       name: 'Mirzapur',

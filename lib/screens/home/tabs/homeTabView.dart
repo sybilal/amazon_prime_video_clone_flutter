@@ -1,6 +1,7 @@
 import 'package:amazon_prime_clone/models/home/homeModal.dart';
 import 'package:amazon_prime_clone/screens/home/components/categoryItemWidget.dart';
 import 'package:amazon_prime_clone/utilities/constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HomeTabView extends StatefulWidget {
@@ -14,38 +15,44 @@ class _HomeTabViewState extends State<HomeTabView> {
 
   @override
   void initState() {
-    _carouselController.addListener(() {
-      setState(() {
-        currentCarousal = _carouselController.page;
-      });
-    });
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         Container(
           height: 200,
           child: Stack(
             children: [
               PageView(
-                  controller: _carouselController,
-                  children: carouselItems
-                      .map((e) => Container(
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                alignment: Alignment.topCenter,
-                                image: NetworkImage(e.imagePath),
-                              ),
-                            ),
-                          ))
-                      .toList()),
+                onPageChanged: (carouselNumber) {
+                  setState(() {
+                    currentCarousal = carouselNumber.toDouble();
+                  });
+                },
+                controller: _carouselController,
+                children: carouselItems.map(
+                  (e) {
+                    var index = carouselItems.indexOf(e);
+                    return AnimatedOpacity(
+                      opacity: index == currentCarousal.round() ? 1 : 0.3,
+                      duration: Duration(milliseconds: 150),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                            image: CachedNetworkImageProvider(e.imagePath),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
               Container(
                 padding: EdgeInsets.only(bottom: 10),
                 alignment: Alignment.bottomCenter,
@@ -54,27 +61,27 @@ class _HomeTabViewState extends State<HomeTabView> {
                   children: [
                     CircleAvatar(
                       radius: 4,
-                      backgroundColor: currentCarousal.round() == 0.0
-                          ? Colors.white
-                          : Colors.grey,
+                      backgroundColor: Colors.white.withOpacity(
+                        currentCarousal.round() == 0.0 ? 0.8 : 0.5,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     CircleAvatar(
                       radius: 4,
-                      backgroundColor: currentCarousal.round() == 1.0
-                          ? Colors.white
-                          : Colors.grey,
+                      backgroundColor: Colors.white.withOpacity(
+                        currentCarousal.round() == 1.0 ? 0.8 : 0.5,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
                     CircleAvatar(
                       radius: 4,
-                      backgroundColor: currentCarousal.round() == 2.0
-                          ? Colors.white
-                          : Colors.grey,
+                      backgroundColor: Colors.white.withOpacity(
+                        currentCarousal.round() == 2.0 ? 0.8 : 0.5,
+                      ),
                     )
                   ],
                 ),
@@ -83,21 +90,20 @@ class _HomeTabViewState extends State<HomeTabView> {
           ),
         ),
         // cat item
-        Expanded(
-          child: ListView(
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              CategoryWidget(
-                categoryItem: categoryItems[0],
-              ),
-              CategoryWidget(
-                categoryItem: categoryItems[1],
-              ),
-              CategoryWidget(
-                categoryItem: categoryItems[2],
-              ),
-            ],
-          ),
+        CategoryWidget(
+          categoryItem: categoryItems[0],
+        ),
+        CategoryWidget(
+          categoryItem: categoryItems[1],
+        ),
+        CategoryWidget(
+          categoryItem: categoryItems[2],
+        ),
+        CategoryWidget(
+          categoryItem: categoryItems[0],
+        ),
+        SizedBox(
+          height: 20,
         )
       ],
     );
