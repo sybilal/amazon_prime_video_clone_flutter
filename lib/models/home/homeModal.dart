@@ -49,7 +49,7 @@ List<ShowItem> originals = [
           'https://images-na.ssl-images-amazon.com/images/S/pv-target-images/0c430172c4f561b28d8afff7eac5d400b0212cf7d3222acb70609ace00e4fdf2._UY500_UX667_RI_V_TTW_.jpg'),
 ];
 
-List<ShowItem> carouselItems = [
+List<ShowItem> carouselMovieItems = [
   ShowItem(
       id: 1,
       name: 'The Boys',

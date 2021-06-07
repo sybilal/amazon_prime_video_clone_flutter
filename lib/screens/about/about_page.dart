@@ -41,8 +41,20 @@ class _AboutPageState extends State<AboutPage> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Container(
@@ -53,6 +65,9 @@ class _AboutPageState extends State<AboutPage> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  width: 28,
+                )
               ],
             ),
             Expanded(
@@ -79,7 +94,7 @@ class _AboutPageState extends State<AboutPage> {
                     style: TextStyle(
                         fontSize: 25.0,
                         color: Colors.white,
-                        fontWeight: FontWeight.w100),
+                        fontWeight: FontWeight.w200),
                   ),
                   SizedBox(
                     height: 30,

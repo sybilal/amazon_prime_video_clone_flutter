@@ -1,3 +1,4 @@
+import 'package:amazon_prime_clone/models/home/homeModal.dart';
 import 'package:amazon_prime_clone/screens/about/about_page.dart';
 import 'package:amazon_prime_clone/screens/home/tabs/homeTabView.dart';
 import 'package:flutter/material.dart';
@@ -83,10 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           body: TabBarView(
             children: <Widget>[
-              HomeTabView(),
-              HomeTabView(),
-              HomeTabView(),
-              HomeTabView(),
+              HomeTabView(
+                carouselItems: carouselMovieItems,
+              ),
+              HomeTabView(
+                carouselItems: List.from(carouselMovieItems.reversed),
+              ),
+              HomeTabView(
+                carouselItems: carouselMovieItems,
+              ),
+              HomeTabView(
+                carouselItems: List.from(carouselMovieItems.reversed),
+              ),
             ],
           ),
         ),

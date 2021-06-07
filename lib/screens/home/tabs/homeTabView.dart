@@ -5,6 +5,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HomeTabView extends StatefulWidget {
+  final List<ShowItem> carouselItems;
+
+  const HomeTabView({Key key, this.carouselItems}) : super(key: key);
   @override
   _HomeTabViewState createState() => _HomeTabViewState();
 }
@@ -33,9 +36,9 @@ class _HomeTabViewState extends State<HomeTabView> {
                   });
                 },
                 controller: _carouselController,
-                children: carouselItems.map(
+                children: widget.carouselItems.map(
                   (e) {
-                    var index = carouselItems.indexOf(e);
+                    var index = widget.carouselItems.indexOf(e);
                     return AnimatedOpacity(
                       opacity: index == currentCarousal.round() ? 1 : 0.3,
                       duration: Duration(milliseconds: 150),
