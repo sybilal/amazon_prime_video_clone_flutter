@@ -1,3 +1,4 @@
+import 'package:amazon_prime_clone/app-routing.dart';
 import 'package:amazon_prime_clone/screens/home/home.dart';
 import 'package:amazon_prime_clone/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
             ),
         accentColor: Colors.white,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: MyHomePage.routeName,
+      routes: appRoutes,
     );
   }
 }
