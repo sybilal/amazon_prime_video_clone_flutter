@@ -1,18 +1,14 @@
 import 'package:amazon_prime_clone/models/home/homeModal.dart';
+import 'package:amazon_prime_clone/screens/showScreen/showFullScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class ShowScreen extends StatefulWidget {
+class ShowScreen extends StatelessWidget {
   const ShowScreen({Key key}) : super(key: key);
 
   static const routeName = '/show-screen';
 
-  @override
-  _ShowScreenState createState() => _ShowScreenState();
-}
-
-class _ShowScreenState extends State<ShowScreen> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as ShowItem;
@@ -68,7 +64,7 @@ class _ShowScreenState extends State<ShowScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    print('play the damn video');
+                    Navigator.pushNamed(context, ShowFullScreen.routeName);
                   },
                   child: Container(
                     height: 50,
