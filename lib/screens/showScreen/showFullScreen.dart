@@ -16,6 +16,7 @@ class _ShowFullScreenState extends State<ShowFullScreen> {
   // bool _isPlaying = true;
 
   double _seekValue = 0;
+  bool _showMedia = false;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _ShowFullScreenState extends State<ShowFullScreen> {
         }
       })
       ..initialize().then((_) {
+        showMedia();
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
           _controller.play();
@@ -68,7 +70,14 @@ class _ShowFullScreenState extends State<ShowFullScreen> {
           children: [
             _controller.value.isInitialized
                 ? GestureDetector(
-                    onTap: toggleVideo,
+                    onTap: () {
+                      if (_showMedia)
+                        setState(() {
+                          _showMedia = false;
+                        });
+                      else
+                        showMedia();
+                    },
                     child: Center(
                       child: AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
@@ -79,87 +88,103 @@ class _ShowFullScreenState extends State<ShowFullScreen> {
                 : Container(
                     child: Center(child: CircularProgressIndicator()),
                   ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 150,
-                color: Colors.black.withOpacity(0.5),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            _showMedia
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 150,
+                      color: Colors.black.withOpacity(0.5),
+                      child: Column(
                         children: [
-                          Text(_printDuration(
-                              Duration(seconds: _seekValue.toInt()))),
-                          Text(_printDuration(_controller.value.duration)),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(_printDuration(
+                                    Duration(seconds: _seekValue.toInt()))),
+                                Text(
+                                    _printDuration(_controller.value.duration)),
+                              ],
+                            ),
+                          ),
+                          Slider(
+                            min: 0,
+                            max:
+                                _controller.value.duration.inSeconds.toDouble(),
+                            onChanged: (val) {
+                              setState(() {
+                                _seekValue = val;
+                              });
+                            },
+                            onChangeEnd: (val) {
+                              setState(() {
+                                _controller.seekTo(
+                                    Duration(seconds: _seekValue.toInt()));
+                              });
+                            },
+                            value: _seekValue,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  videoSeekTo(Duration.zero);
+                                },
+                                child: Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: toggleVideo,
+                                child: Icon(
+                                  _controller.value.isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  _controller.pause();
+                                  videoSeekTo(Duration.zero);
+                                },
+                                child: Icon(
+                                  Icons.stop,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    Slider(
-                      min: 0,
-                      max: _controller.value.duration.inSeconds.toDouble(),
-                      onChanged: (val) {
-                        setState(() {
-                          _seekValue = val;
-                        });
-                      },
-                      onChangeEnd: (val) {
-                        setState(() {
-                          _controller
-                              .seekTo(Duration(seconds: _seekValue.toInt()));
-                        });
-                      },
-                      value: _seekValue,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            videoSeekTo(Duration.zero);
-                          },
-                          child: Icon(
-                            Icons.skip_previous,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: toggleVideo,
-                          child: Icon(
-                            _controller.value.isPlaying
-                                ? Icons.pause
-                                : Icons.play_arrow,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            _controller.pause();
-                            videoSeekTo(Duration.zero);
-                          },
-                          child: Icon(
-                            Icons.stop,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
+                  )
+                : Container()
           ],
         ),
       ),
     );
+  }
+
+  showMedia() async {
+    print('showmedia called');
+    setState(() {
+      _showMedia = true;
+    });
+    await Future.delayed(Duration(seconds: 5));
+    setState(() {
+      _showMedia = false;
+    });
   }
 
   String _printDuration(Duration duration) {
