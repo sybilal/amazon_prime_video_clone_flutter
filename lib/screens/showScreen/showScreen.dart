@@ -2,7 +2,6 @@ import 'package:amazon_prime_clone/models/home/homeModal.dart';
 import 'package:amazon_prime_clone/screens/showScreen/showFullScreen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 class ShowScreen extends StatelessWidget {
   const ShowScreen({Key key}) : super(key: key);
@@ -64,7 +63,8 @@ class ShowScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, ShowFullScreen.routeName);
+                    Navigator.pushNamed(context, ShowFullScreen.routeName,
+                        arguments: args.videoId);
                   },
                   child: Container(
                     height: 50,
